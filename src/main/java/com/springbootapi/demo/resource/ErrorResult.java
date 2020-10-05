@@ -15,4 +15,11 @@ public class ErrorResult {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        return "ErrorResult{" +
+                "message='" + message + '\'' +
+                '}';
+    }
 }

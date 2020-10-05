@@ -5,6 +5,7 @@ import com.springbootapi.demo.Exception.NotFoundException;
 import com.springbootapi.demo.resource.ErrorResult;
 import com.springbootapi.demo.resource.FieldResource;
 import com.springbootapi.demo.resource.InvalidErrorResouce;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
+@Slf4j
 public class ApiExceptionHandler {
 
     /**
@@ -28,7 +30,9 @@ public class ApiExceptionHandler {
     @ResponseBody
     public ResponseEntity<?> handleNotFound(RuntimeException e) {
         ErrorResult errorResult = new ErrorResult(e.getMessage());
-        return new ResponseEntity<Object>(errorResult, HttpStatus.NOT_FOUND);
+        ResponseEntity result = new ResponseEntity<Object>(errorResult, HttpStatus.NOT_FOUND);
+        log.error("Error ------ {} ", result);
+        return result;
     }
 
     /**
@@ -50,7 +54,9 @@ public class ApiExceptionHandler {
             fieldResources.add(fieldResource);
         }
         InvalidErrorResouce invalidErrorResouce = new InvalidErrorResouce(e.getMessage(), fieldResources);
-        return new ResponseEntity<Object>(invalidErrorResouce, HttpStatus.BAD_REQUEST);
+        ResponseEntity result = new ResponseEntity<Object>(invalidErrorResouce, HttpStatus.BAD_REQUEST);
+        log.error("Error ------ {} ", result);
+        return result;
     }
 
     /**
@@ -61,7 +67,8 @@ public class ApiExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseEntity<?> handleException(Exception e) {
-        return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+        log.error("Error ------ {} ", e.getMessage());
+        return new ResponseEntity<Object>("catch other exception ", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 

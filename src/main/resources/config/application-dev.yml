@@ -1,10 +1,10 @@
 
 logging:
   level:
-    root: warn
-    org.springframework.web: warn
+    root: info
+    org.springframework.web: info
     com.springbootapi: info
   file:
     path: devlog
-  config:
-    classpath: logback-spring.xml
+#  config:
+#    classpath: logback-spring.xml
